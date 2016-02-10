@@ -1,0 +1,8 @@
+/.idea
+/target
+/out
+/logs
+/node_modules
+*.iml
+/mockups
+.DS_Store

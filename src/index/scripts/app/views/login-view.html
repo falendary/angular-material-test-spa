@@ -1,0 +1,29 @@
+<div class="login-view" layout="column">
+    <hgroup>
+        <h1>Angular SPA</h1>
+        <h3>By Sergey Zhitenev</h3>
+    </hgroup>
+    <form>
+        <div class="group">
+            <input type="text" data-ng-model="vm.credentials.username"><span class="highlight"></span><span class="bar"></span>
+            <label>Login</label>
+        </div>
+        <div class="group">
+            <input type="email" data-ng-model="vm.credentials.password"><span class="highlight"></span><span class="bar"></span>
+            <label>Password</label>
+        </div>
+        <button type="button" class="button buttonBlue" data-ng-click="vm.signIn(vm.credentials)">Sign in
+            <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+        </button>
+    </form>
+</div>
+
+<script>
+    $('input').blur(function() {
+        var $this = $(this);
+        if ($this.val())
+            $this.addClass('used');
+        else
+            $this.removeClass('used');
+    });
+</script>

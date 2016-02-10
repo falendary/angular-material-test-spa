@@ -1,0 +1,22 @@
+<md-dialog>
+    <md-dialog-content class="md-dialog-content">
+        <h2 class="md-title">Sort by</h2>
+        <div layout="row" class="input-row layout-row">
+            <md-radio-group ng-model="vm.query.order">
+                <md-radio-button value="city" class="md-primary">City</md-radio-button>
+                <md-radio-button value="population"> Population</md-radio-button>
+            </md-radio-group>
+        </div>
+        <h2 class="md-title">Group by</h2>
+        <div layout="row" class="input-row layout-row">
+            <md-checkbox data-ng-model="vm.query.groupItems">
+                Country
+            </md-checkbox>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.closeDialog()" class="md-primary">
+            Close Dialog
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>,
