@@ -11,6 +11,31 @@
         </div>
     </md-toolbar>
     <md-content flex="" md-scroll-y="" class="md-default-theme">
-
+        <md-table-container>
+            <table md-table id="goods-table" >
+                <thead md-head>
+                <tr md-row>
+                    <th md-column>Name</th>
+                    <th md-column>Count</th>
+                    <th md-column>Price</th>
+                    <th md-column>Categories</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row data-ng-repeat="item in vm.items">
+                    <td md-cell data-ng-bind="item.name"></td>
+                    <td md-cell data-ng-bind="item.value_int"></td>
+                    <td md-cell data-ng-bind="item.value_float"></td>
+                    <td md-cell>
+                        <md-chips class="category-label" data-ng-model="item.categories" readonly="true">
+                            <md-chip-template>
+                                   {{$chip.name}}
+                            </md-chip-template>
+                        </md-chips>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
     </md-content>
 </div>

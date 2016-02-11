@@ -17,7 +17,7 @@
 	app.controller('LogoutController', ['$scope', '$state', require('./app/controllers/logoutController')]);
 	app.controller('ShellController', ['$scope', require('./app/controllers/shellController')]);
 	app.controller('PopulationController', ['$scope', '$mdDialog', require('./app/controllers/populationController')]);
-	app.controller('GoodsController', ['$scope', require('./app/controllers/goodsController')]);
+	app.controller('GoodsController', ['$scope', '$mdDialog', require('./app/controllers/goodsController')]);
 
 	app.config(['$stateProvider', '$urlRouterProvider', require('./app/router')]);
 

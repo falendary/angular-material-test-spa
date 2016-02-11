@@ -41,6 +41,7 @@ module.exports = function ($scope, $mdDialog) {
         }
     ];
 
+    //TODO вынести в отдельный сервис
     function tableSort(property) {
         var sortOrder = 1;
         if (property[0] === "-") {
@@ -53,11 +54,17 @@ module.exports = function ($scope, $mdDialog) {
         }
     }
 
+    //TODO Вынести в отдельный сервис,
+    //контроллер не должен знать как работать с данными
     function transformStats(items, property) {
 
         var grouped = [];
         var i;
 
+        // Хотел сделать контенто-независимую но понял
+        // что это займет еще больше методов
+
+        // проверяем добавлен ли уже такой корень
         var isGroupAlreadyAdded = function (items, property, value) {
             var i;
             for (i = 0; i < items.length; i = i + 1) {
@@ -67,6 +74,7 @@ module.exports = function ($scope, $mdDialog) {
             }
         };
 
+        // Добавляем групируемое свойство как корень
         var addGroupRoots = function (item) {
             var keys = Object.keys(item);
             var obj;
@@ -80,11 +88,11 @@ module.exports = function ($scope, $mdDialog) {
                     if (!isGroupAlreadyAdded(grouped, property, value)) {
                         grouped.push(obj);
                     }
-                    fillWithProps(item, property);
                 }
             }
         };
 
+        // наполняем данными
         var fillWithProps = function (currentItem, groupByProperty) {
             var i;
             var p;
@@ -94,21 +102,56 @@ module.exports = function ($scope, $mdDialog) {
                 if (grouped[i][groupByProperty] === currentItem[groupByProperty]) {
                     keys = Object.keys(currentItem);
                     for (p = 0; p < keys.length; p = p + 1) {
-                        console.log(grouped[i][keys[i] + 'Array']);
-                        if (typeof grouped[i][keys[i] + 'Array'] === 'undefined') {
-                            grouped[i][keys[i] + 'Array'] = [];
+                        if (typeof grouped[i][keys[p] + 'Array'] === 'undefined') {
+                            grouped[i][keys[p] + 'Array'] = [];
                         }
                         obj = {};
-                        obj[keys[i]] = currentItem[keys[i]];
-                        grouped[i][keys[i] + 'Array'].push(obj);
+                        obj[keys[p]] = currentItem[keys[p]];
+                        grouped[i][keys[p] + 'Array'].push(obj);
                     }
                 }
             }
         };
 
+        // создаем свойство total
+        var calcTotal = function(items) {
+            var i, k;
+            var keys;
+            var keyName;
+
+
+            var sum = function(array, property) {
+                var i;
+                var total = 0;
+
+                for (i = 0; i < array.length; i = i + 1) {
+                    total = total + array[i][property];
+                }
+
+                return total;
+            };
+            var getPropertyName = function(key) {
+                return key.split('Array')[0];
+            };
+
+            for(i = 0; i < items.length; i = i + 1) {
+                items[i].total = {caption: 'Total'};
+                keys = Object.keys(items[i]);
+                for (k = 0; k < keys.length; k = k + 1) {
+                    keyName = getPropertyName(keys[k]);
+                    items[i].total[keyName] = sum(items[i][keys[k]], keyName);
+                }
+            }
+
+            return items;
+        };
+
         for (i = 0; i < items.length; i = i + 1) {
             addGroupRoots(items[i]);
+            fillWithProps(items[i], property);
         }
+
+        grouped = calcTotal(grouped);
 
         console.log('grouped', grouped);
 

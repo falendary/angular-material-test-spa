@@ -1,12 +1,4 @@
 <div layout="column" class="relative" layout-fill="" role="main">
-    <md-button class="md-fab md-fab-bottom-right md-button md-default-theme" type="button" aria-label="Add"
-               data-ng-click="showAdd($event)" tabindex="0">
-        <ng-md-icon icon="add" class="ng-scope">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-            </svg>
-        </ng-md-icon>
-    </md-button>
     <md-toolbar class="md-default-theme" aria-hidden="false">
         <div class="md-toolbar-tools">
             <h3>
@@ -48,7 +40,7 @@
                 </script>
             </md-table-container>
             <md-table-container  data-ng-if="vm.populationTableQuery.groupItems">
-                <table md-table id="population-table">
+                <table md-table id="population-table1">
                     <thead md-head>
                     <tr md-row>
                         <th md-column>Country</th>
@@ -60,28 +52,36 @@
                     <tr md-row data-ng-repeat="stat in vm.statsGrouped">
                         <td md-cell data-ng-bind="stat.country"></td>
                         <td md-cell>
-                            <table>
-                                <tr data-ng-repeat="city in stat.cityArray">
-                                    <td data-ng-bind="city.name">
-                                    </td>
-                                    <td> data-ng-bind="stat.total.cities"</td>
-                                </tr>
+                            <table md-table>
+                                <tbody md-body>
+                                    <tr md-row data-ng-repeat="item in stat.cityArray">
+                                        <td md-cell data-ng-bind="item.city">
+                                        </td>
+                                    </tr>
+                                    <tr md-row>
+                                        <td md-cell><b>{{stat.total.caption}}</b></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </td>
-                        <td md-cell data-ng-bind="stat.population">
-                            <table>
-                                <tr data-ng-repeat="population in stat.populationsArray">
-                                    <td data-ng-bind="population.value">
-                                    </td>
-                                    <td data-ng-bind="stat.total.population"></td>
-                                </tr>
+                        <td md-cell>
+                            <table md-table>
+                                <tbody md-body>
+                                    <tr md-row data-ng-repeat="item in stat.populationArray">
+                                        <td md-cell data-ng-bind="item.population">
+                                        </td>
+                                    </tr>
+                                    <tr md-row>
+                                        <td md-cell data-ng-bind="stat.total.population"></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </td>
                     </tr>
                     </tbody>
                 </table>
                 <script>
-                    new TableDrag(document.getElementById('population-table'));
+                    new TableDrag(document.getElementById('population-table1'));
                 </script>
             </md-table-container>
         </div>
