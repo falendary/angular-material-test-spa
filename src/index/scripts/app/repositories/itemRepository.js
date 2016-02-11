@@ -12,6 +12,28 @@ var toJson = function(data){
     return data.json();
 };
 
+var getList = function(itemPage){
+    if (itemPage) {
+        return fetch(host + contentApp + baseUrl + 'item/?page=' + itemPage, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(toJson);
+    } else {
+        return fetch(host + contentApp + baseUrl + 'item/', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(toJson);
+    }
+};
+
 var add = function(item) {
     return fetch(host + contentApp + baseUrl + 'item/', {
         method: 'POST',
@@ -59,6 +81,7 @@ var deleteByKey = function(id) {
 };
 
 module.exports = {
+    getList: getList,
     add: add,
     getByKey: getByKey,
     update: update,

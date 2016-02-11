@@ -2,6 +2,8 @@
  * Created by s.zhitenev on 10.02.2016.
  */
 
+var statService = require('../services/statService');
+
 'use strict';
 module.exports = function ($scope, $mdDialog) {
 
@@ -14,32 +16,11 @@ module.exports = function ($scope, $mdDialog) {
         order: 'population'
     };
 
-    vm.stats = [
-        {
-            id: 1,
-            country: 'Russia',
-            city: 'Moscow',
-            population: 24000000
-        },
-        {
-            id: 2,
-            country: 'Russia',
-            city: 'St.Peterburg',
-            population: 12000000
-        },
-        {
-            id: 3,
-            country: 'USA',
-            city: 'New York',
-            population: 20000000
-        },
-        {
-            id: 4,
-            country: 'USA',
-            city: 'Washington',
-            population: 5000000
-        }
-    ];
+    statService.getList().then(function (data) {
+        vm.stats = data;
+        console.log('data', vm.stats);
+        $scope.$apply();
+    });
 
     //TODO вынести в отдельный сервис
     function tableSort(property) {
@@ -114,13 +95,13 @@ module.exports = function ($scope, $mdDialog) {
         };
 
         // создаем свойство total
-        var calcTotal = function(items) {
+        var calcTotal = function (items) {
             var i, k;
             var keys;
             var keyName;
 
 
-            var sum = function(array, property) {
+            var sum = function (array, property) {
                 var i;
                 var total = 0;
 
@@ -130,11 +111,11 @@ module.exports = function ($scope, $mdDialog) {
 
                 return total;
             };
-            var getPropertyName = function(key) {
+            var getPropertyName = function (key) {
                 return key.split('Array')[0];
             };
 
-            for(i = 0; i < items.length; i = i + 1) {
+            for (i = 0; i < items.length; i = i + 1) {
                 items[i].total = {caption: 'Total'};
                 keys = Object.keys(items[i]);
                 for (k = 0; k < keys.length; k = k + 1) {

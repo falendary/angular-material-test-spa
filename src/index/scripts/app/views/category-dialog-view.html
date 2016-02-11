@@ -1,0 +1,41 @@
+<md-dialog class="category-dialog">
+    <md-dialog-content class="md-dialog-content">
+        <md-content layout-padding>
+            <div layout-gt-xs="row">
+                <md-input-container>
+                    <label>Name</label>
+                    <input data-ng-model="vm.category.name">
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row">
+                <md-input-container>
+                    <label>Description</label>
+                    <input data-ng-model="vm.category.description">
+                </md-input-container>
+            </div>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.updateCategory()" data-ng-if="vm.isEdit" class="md-raised md-primary">
+            Save
+        </md-button>
+        <md-button ng-click="vm.deleteCategory()" data-ng-if="vm.isEdit" class="md-raised md-warn">
+            Delete
+        </md-button>
+        <md-button ng-click="vm.createCategory()" data-ng-if="!vm.isEdit" class="md-raised md-primary">
+            Create
+        </md-button>
+        <md-button ng-click="vm.closeDialog()" class="md-default">
+            Close Dialog
+        </md-button>
+    </md-dialog-actions>
+    <script>
+        $('input').blur(function () {
+            var $this = $(this);
+            if ($this.val())
+                $this.addClass('used');
+            else
+                $this.removeClass('used');
+        });
+    </script>
+</md-dialog>

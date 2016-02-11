@@ -6,6 +6,10 @@
 
 var categoryRepository = require('../repositories/categoryRepository');
 
+var getList = function(){
+    return categoryRepository.getList();
+}
+
 var add = function(category) {
     return categoryRepository.add(category);
 };
@@ -23,6 +27,7 @@ var deleteByKey = function(id) {
 };
 
 module.exports = {
+    getList: getList,
     add: add,
     getByKey: getByKey,
     update: update,

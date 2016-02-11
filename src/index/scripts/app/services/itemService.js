@@ -6,6 +6,10 @@
 
 var itemRepository = require('../repositories/itemRepository');
 
+var getList = function(itemPage){
+    return itemRepository.getList(itemPage);
+};
+
 var add = function(item) {
     return itemRepository.add(item);
 };
@@ -23,6 +27,7 @@ var deleteByKey = function(id) {
 };
 
 module.exports = {
+    getList: getList,
     add: add,
     getByKey: getByKey,
     update: update,

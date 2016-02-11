@@ -6,6 +6,10 @@
 
 var statRepository = require('../repositories/statRepository');
 
+var getList = function() {
+    return statRepository.getList();
+};
+
 var add = function(stat) {
     return statRepository.add(stat);
 };
@@ -23,6 +27,7 @@ var deleteByKey = function(id) {
 };
 
 module.exports = {
+    getList: getList,
     add: add,
     getByKey: getByKey,
     update: update,

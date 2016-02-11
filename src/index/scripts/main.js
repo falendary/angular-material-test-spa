@@ -13,7 +13,7 @@
 		console.log('app started!');
 	}]);
 
-	app.controller('LoginController', ['$scope', require('./app/controllers/loginController')]);
+	app.controller('LoginController', ['$scope', '$state', require('./app/controllers/loginController')]);
 	app.controller('LogoutController', ['$scope', '$state', require('./app/controllers/logoutController')]);
 	app.controller('ShellController', ['$scope', require('./app/controllers/shellController')]);
 	app.controller('PopulationController', ['$scope', '$mdDialog', require('./app/controllers/populationController')]);

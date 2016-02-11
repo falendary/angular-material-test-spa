@@ -15,6 +15,17 @@ var toJson = function(data){
     return data.json();
 };
 
+var getList = function(){
+    return fetch(host + contentApp + baseUrl + 'category/', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json'
+        }
+    }).then(toJson);
+};
+
 var add = function(category) {
     return fetch(host + contentApp + baseUrl + 'category/', {
         method: 'POST',
@@ -62,6 +73,7 @@ var deleteByKey = function(id) {
 };
 
 module.exports = {
+    getList: getList,
     add: add,
     getByKey: getByKey,
     update: update,

@@ -5,11 +5,11 @@
     </hgroup>
     <form>
         <div class="group">
-            <input type="text" data-ng-model="vm.credentials.username"><span class="highlight"></span><span class="bar"></span>
+            <input type="text" data-ng-model="vm.credentials.username" class="used"><span class="highlight"></span><span class="bar"></span>
             <label>Login</label>
         </div>
         <div class="group">
-            <input type="email" data-ng-model="vm.credentials.password"><span class="highlight"></span><span class="bar"></span>
+            <input type="password" data-ng-model="vm.credentials.password" class="used"><span class="highlight"></span><span class="bar"></span>
             <label>Password</label>
         </div>
         <button type="button" class="button buttonBlue" data-ng-click="vm.signIn(vm.credentials)">Sign in

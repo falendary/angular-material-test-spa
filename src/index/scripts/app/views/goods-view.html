@@ -1,5 +1,8 @@
 <div layout="column" class="relative" layout-fill="" role="main">
-    <md-button class="md-fab md-fab-bottom-right md-button md-default-theme" aria-label="Add" ng-click="showAdd($event)" tabindex="0">
+    <md-button class="md-fab md-fab-bottom-right md-button md-default-theme" aria-label="Add" ng-click="vm.createItem($event)" tabindex="0">
+        <ng-md-icon icon="add" class="ng-scope"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg></ng-md-icon>
+    </md-button>
+    <md-button class="md-fab md-fab-bottom-right category-btn md-button md-default-theme" aria-label="Add" ng-click="vm.createCategory($event)" tabindex="0">
         <ng-md-icon icon="add" class="ng-scope"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg></ng-md-icon>
     </md-button>
     <md-toolbar class="md-default-theme" aria-hidden="false">
@@ -11,7 +14,7 @@
         </div>
     </md-toolbar>
     <md-content flex="" md-scroll-y="" class="md-default-theme">
-        <md-table-container>
+        <md-table-container data-ng-if="vm.items.length">
             <table md-table id="goods-table" >
                 <thead md-head>
                 <tr md-row>
@@ -23,13 +26,13 @@
                 </thead>
                 <tbody md-body>
                 <tr md-row data-ng-repeat="item in vm.items">
-                    <td md-cell data-ng-bind="item.name"></td>
+                    <td md-cell data-ng-bind="item.name" data-ng-click="vm.editItem($event, item)"></td>
                     <td md-cell data-ng-bind="item.value_int"></td>
                     <td md-cell data-ng-bind="item.value_float"></td>
                     <td md-cell>
                         <md-chips class="category-label" data-ng-model="item.categories" readonly="true">
                             <md-chip-template>
-                                   {{$chip.name}}
+                                   <span data-ng-click="vm.editCategory($event, $chip)" data-ng-bind="$chip.name"></span>
                             </md-chip-template>
                         </md-chips>
                     </td>
@@ -37,5 +40,12 @@
                 </tbody>
             </table>
         </md-table-container>
+
+        <md-button ng-click="vm.prevPage()" class="md-default" data-ng-disabled="vm.currentPage === 1">
+            Prev Page
+        </md-button>
+        <md-button ng-click="vm.nextPage()" class="md-default" data-ng-disabled="!vm.nextPageStatus">
+            Next Page
+        </md-button>
     </md-content>
 </div>
