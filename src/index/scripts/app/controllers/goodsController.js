@@ -39,15 +39,42 @@ module.exports = function($scope, $mdDialog) {
         return item;
     };
 
+    vm.getAllCategories = function(){
+        var categoriesPerPage = 2;
+        return categoryService.getList().then(function(initCategory){
+
+            var promises = [];
+            var categoryPage = 1;
+            var totalPages = Math.round(initCategory.count / categoriesPerPage);
+            for(var i = 1; i < totalPages; i = i + 1) {
+                categoryPage = categoryPage + 1;
+                promises.push(categoryService.getList(categoryPage))
+            }
+
+            return Promise.all(promises).then(function(data){
+                var result = [];
+                var i;
+                for(i = 0; i < data.length; i = i + 1) {
+                    result = result.concat(data[i].results);
+                }
+                return result;
+            })
+
+        })
+    };
+
     vm.getData = function(itemPage) {
 
         var promises = [];
 
-        promises.push(categoryService.getList());
+        promises.push(vm.getAllCategories());
         promises.push(itemService.getList(itemPage));
 
         Promise.all(promises).then(function(data) {
-            vm.categories = data[0].results;
+            if(data[1].detail) {
+                vm.getData();
+            }
+            vm.categories = data[0];
             vm.items = data[1].results;
 
             vm.nextPageStatus = !!data[1].next;
@@ -61,6 +88,7 @@ module.exports = function($scope, $mdDialog) {
             }
 
             console.log('vm.items', vm.items);
+            console.log('vm.categories', vm.categories);
 
             $scope.$apply();
         })
@@ -99,11 +127,11 @@ module.exports = function($scope, $mdDialog) {
             if(result.method === 'UPDATE') {
                 result.entity = reduceItemCategories(result.entity);
                 itemService.update(result.entity.id, result.entity);
-                vm.getData();
+                vm.getData(vm.currentPage);
             }
             if (result.method === 'DELETE') {
                 itemService.deleteByKey(result.entity.id);
-                vm.getData();
+                vm.getData(vm.currentPage);
             }
         });
 
@@ -170,11 +198,11 @@ module.exports = function($scope, $mdDialog) {
 
             if(result.method === 'UPDATE') {
                 categoryService.update(result.entity.id, result.entity);
-                vm.getData();
+                vm.getData(vm.currentPage);
             }
             if (result.method === 'DELETE') {
                 categoryService.deleteByKey(result.entity.id);
-                vm.getData();
+                vm.getData(vm.currentPage);
             }
 
         });
@@ -216,8 +244,10 @@ module.exports = function($scope, $mdDialog) {
         }).then(function (result) {
             if(result.method === 'POST') {
                 result.entity = reduceItemCategories(result.entity);
-                itemService.add(result.entity);
-                vm.getData();
+                itemService.add(result.entity).then(function(){
+                    vm.getData(vm.currentPage);
+                });
+
             }
         });
 
@@ -277,8 +307,9 @@ module.exports = function($scope, $mdDialog) {
         }).then(function (result) {
 
             if(result.method === 'POST') {
-                categoryService.add(result.entity);
-                vm.getData();
+                categoryService.add(result.entity).then(function(){
+                    vm.getData(vm.currentPage);
+                });
             }
 
         });

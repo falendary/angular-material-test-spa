@@ -6,9 +6,9 @@
 
 var categoryRepository = require('../repositories/categoryRepository');
 
-var getList = function(){
-    return categoryRepository.getList();
-}
+var getList = function(categoryPage){
+    return categoryRepository.getList(categoryPage);
+};
 
 var add = function(category) {
     return categoryRepository.add(category);

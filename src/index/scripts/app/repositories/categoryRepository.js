@@ -15,15 +15,26 @@ var toJson = function(data){
     return data.json();
 };
 
-var getList = function(){
-    return fetch(host + contentApp + baseUrl + 'category/', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            Accept: 'application/json',
-            'Content-type': 'application/json'
-        }
-    }).then(toJson);
+var getList = function(categoryPage){
+    if (categoryPage) {
+        return fetch(host + contentApp + baseUrl + 'category/?page=' + categoryPage, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(toJson);
+    } else {
+        return fetch(host + contentApp + baseUrl + 'category/', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(toJson);
+    }
 };
 
 var add = function(category) {

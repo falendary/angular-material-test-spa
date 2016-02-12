@@ -112,6 +112,18 @@
             .pipe(gulp.dest('dist/core/scripts/'));
     });
 
+    gulp.task('Core-min-fetch-JS', function () {
+
+        var pathToJS = [
+            'node_modules/whatwg-fetch/fetch.js'
+        ];
+
+        return gulp.src(pathToJS)
+            .pipe(concat('fetch.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/core/scripts/'));
+    });
+
     gulp.task('Core-min-All', [
         'Core-min-Angular-JS',
         'Core-min-Angular-UI-JS',
@@ -119,7 +131,8 @@
         'Core-min-CoreJS-JS',
         'Core-min-Angular-material-CSS',
         'Core-min-Angular-material-JS',
-        'Core-min-libs-JS'
+        'Core-min-libs-JS',
+        'Core-min-fetch-JS'
     ]);
 
 }());

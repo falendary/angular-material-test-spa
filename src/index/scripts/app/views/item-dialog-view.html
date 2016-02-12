@@ -1,20 +1,20 @@
 <md-dialog>
     <md-dialog-content class="md-dialog-content">
+        <h2 md-title data-ng-if="!vm.isEdit">Create a item</h2>
+        <h2 md-title data-ng-if="vm.isEdit">Edit a item</h2>
         <md-content layout-padding>
+            <md-input-container class="md-block">
+                <label>Name</label>
+                <input data-ng-model="vm.item.name">
+            </md-input-container>
             <div layout-gt-xs="row">
-                <md-input-container>
-                    <label>Name</label>
-                    <input data-ng-model="vm.item.name">
-                </md-input-container>
-            </div>
-            <div layout-gt-xs="row">
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Count</label>
                     <input data-ng-model="vm.item.value_int">
                 </md-input-container>
             </div>
             <div layout-gt-xs="row">
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Cost</label>
                     <input data-ng-model="vm.item.value_float">
                 </md-input-container>
@@ -54,13 +54,5 @@
             Close Dialog
         </md-button>
     </md-dialog-actions>
-    <script>
-        $('input').blur(function () {
-            var $this = $(this);
-            if ($this.val())
-                $this.addClass('used');
-            else
-                $this.removeClass('used');
-        });
-    </script>
+
 </md-dialog>

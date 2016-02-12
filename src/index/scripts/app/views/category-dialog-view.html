@@ -1,16 +1,18 @@
 <md-dialog class="category-dialog">
     <md-dialog-content class="md-dialog-content">
+        <h2 md-title data-ng-if="!vm.isEdit">Create a category</h2>
+        <h2 md-title data-ng-if="vm.isEdit">Edit a category</h2>
         <md-content layout-padding>
             <div layout-gt-xs="row">
-                <md-input-container>
+                <md-input-container flex class="md-block">
                     <label>Name</label>
-                    <input data-ng-model="vm.category.name">
+                    <input data-ng-model="vm.category.name" md-placeholder="Cars">
                 </md-input-container>
             </div>
             <div layout-gt-xs="row">
-                <md-input-container>
+                <md-input-container flex class="md-block">
                     <label>Description</label>
-                    <input data-ng-model="vm.category.description">
+                    <input data-ng-model="vm.category.description" md-placeholder="Lorem ipsum">
                 </md-input-container>
             </div>
         </md-content>
@@ -29,13 +31,4 @@
             Close Dialog
         </md-button>
     </md-dialog-actions>
-    <script>
-        $('input').blur(function () {
-            var $this = $(this);
-            if ($this.val())
-                $this.addClass('used');
-            else
-                $this.removeClass('used');
-        });
-    </script>
 </md-dialog>

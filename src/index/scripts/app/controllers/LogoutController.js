@@ -10,5 +10,12 @@ module.exports = function($scope, $state) {
 
     var vm = this;
 
+    var delete_cookie = function(name) {
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    };
+
+    delete_cookie('sessionid');
+    delete_cookie('csrftoken');
+
     $state.go('login');
 };
